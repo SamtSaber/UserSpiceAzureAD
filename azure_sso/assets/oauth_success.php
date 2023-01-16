@@ -52,6 +52,9 @@ if ($CEQCount > 0) {
   $fields = ['logins'=> $newLoginCount, 'last_login'=> $newLastLogin, 'email'=> $email, 'msft_oid'=> $oid];
 
   $db->update('users', $checkExisting->id, $fields);
+	
+  $date = date("Y-m-d H:i:s");
+  $db->insert('logs',['logdate' => $date,'user_id' => $checkExisting->id,'logtype' => "User",'lognote' => "User logged in."]);
 
   $sessionName = Config::get('session/session_name');
   Session::put($sessionName, $checkExisting->id);
